@@ -34,7 +34,6 @@ server {
         try_files $uri $uri/ /$index_file$is_args$args;
         #### Fast CGI
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
 
         #### include default configuration nginx fastcgi_params
         include fastcgi_params;

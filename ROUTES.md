@@ -154,9 +154,9 @@ Path is info of lists provinces
 
 > example response:
 
-``text
+```text
 http://example.com/urban/BALI%20MESTER
-``
+```
 
 Data is as array list mapping
 
@@ -195,9 +195,9 @@ Path is info of lists provinces & area by sub district & sub value
 
 > example response:
 
-``text
+```text
 http://example.com/sub_district/jatinegara
-``
+```
 
 Data is as array list mapping
 
@@ -245,9 +245,9 @@ Path is info of lists provinces & area by city & sub value
 
 > example response:
 
-``text
+```text
 http://example.com/city/jakarta%20timur
-``
+```
 
 Data is as array list mapping
 

@@ -25,13 +25,13 @@ server {
 
     ### Query For File Index
     location / {
-        try_files $uri $uri/ /$index_file$is_args$args;
+        try_files $uri $uri/ /index.php$is_args$args;
     }
 
     ### PHP handler
     location ~ \.php {
         #### try below to handle all 404 not found with script
-        try_files $uri $uri/ /$index_file$is_args$args;
+        try_files $uri $uri/ /index.php$is_args$args;
         #### Fast CGI
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
 

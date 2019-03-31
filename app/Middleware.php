@@ -19,8 +19,10 @@ $this->add(function (ServerRequestInterface $request, ResponseInterface $respons
     /**
      * @var Response $response
      */
-    if (!preg_match('/^Mozilla\/5\.0/', $ua) // user agent start with mozilla
-        || preg_match('/bot|googlebot|crawler|curl|spider|robot|crawling/i', $ua) // check if contains spider
+    // bot is not allowed here
+    // so when it call with api it must be set normal user-agent header
+    if (!preg_match('/^Mozilla\/5\.0\s+([^\/]+)\/(?:.+)$/i', $ua) // user agent start with mozilla just simple check
+        || preg_match('/bot|googlebot|crawl(?:er|ing)?|curl|spider|robot/i', $ua) // check if contains spider
     ) {
         throw new SlimException(
             $request,

@@ -295,9 +295,9 @@ Path is info of lists provinces & area by city & sub value
 
 > example response:
 
-``text
+```text
 http://example.com/province/daerah%20khusus%20ibukota%20jakarta
-``
+```
 
 Data is as array list mapping
 

@@ -1,0 +1,17 @@
+{
+    "name": "onphpid/indonesia-postal-code",
+    "type": "project",
+    "require": {
+        "php": "^7.0",
+        "ext-json": "*",
+        "slim/slim": "^3.12",
+        "pentagonal/database-dbal": "^1"
+    },
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "nawa",
+            "email": "arrayiterator@gmail.com"
+        }
+    ]
+}

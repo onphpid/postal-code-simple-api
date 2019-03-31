@@ -1,0 +1,44 @@
+# ----------------------------------------------------------------
+# CONF - htaccess (Apache)
+# MAKE SURE MOD REWRITE ACTIVE
+# ---------------------------------------------------------------
+
+# Don't Allow directory indexing
+Options -Indexes
+
+# Follow The Symlinks
+Options FollowSymLinks Multiviews
+
+# ----------------------------------------------------------------
+# SECURITY ENGAGEMENT
+# ----------------------------------------------------------------
+
+# prevent all accesed start with
+# dot(.) to accesed by external
+# -------------------------------
+<Files "^.+">
+    Deny From All
+</Files>
+
+# set default 403 forbidden into
+# Current url - best experience
+# Routes
+# -------------------------------
+ErrorDocument 403 /
+
+# ----------------------------------------------------------------
+# ROUTES HANDLER
+# ----------------------------------------------------------------
+
+# Handle Index base URI '/' With <index.php>
+# -------------------------------
+
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    # use index.php as base URL
+    RewriteRule ^(.*)$ index.php [QSA,L]
+    # handle index.html & index.php to solved as /
+    # RewriteRule ^(index\.s?html)?$ index.php [QSA,L]
+</IfModule>

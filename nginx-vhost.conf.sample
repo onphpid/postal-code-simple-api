@@ -1,0 +1,60 @@
+## THIS DEFAULT NGINX HOST CONFIGURATION
+server {
+    listen 80;
+
+    ####  IF USE HTTPS
+
+    # listen 443 ssl http2;
+
+    # ssl_certificate       /path/to/certificate.crt
+    # ssl_certificate_key   /path/to/certificate.key
+
+    ####  ROOT DIRECTORY
+    root /path/to/root/public;
+
+    ### FILE INDEX
+    index index.php;
+
+    #### HOST
+    server_name api.example.com;
+
+    #### DISABLE LOG
+    # error_log off;    # uncomment this to disable error logging
+    log_not_found off;  # log not found is not important
+    access_log off;     # log access is not important
+
+    ### Query For File Index
+    location / {
+        try_files $uri $uri/ /$index_file$is_args$args;
+    }
+
+    ### PHP handler
+    location ~ \.php {
+        #### try below to handle all 404 not found with script
+        try_files $uri $uri/ /$index_file$is_args$args;
+        #### Fast CGI
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+        #### include default configuration nginx fastcgi_params
+        include fastcgi_params;
+
+        #### environment php file name
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+        fastcgi_index index.php;
+
+        #### BELOW IS PASS FAST CGI
+        #### CHANGE with nginx listen or maybe socker with unix://path/to/sock.sock
+        ####
+        fastcgi_pass 127.0.0.1:9000;
+
+        #### use intercept error
+        fastcgi_intercept_errors off;
+
+        #### buffer size
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+
+    }
+}

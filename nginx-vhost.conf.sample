@@ -44,7 +44,7 @@ server {
         fastcgi_index index.php;
 
         #### BELOW IS PASS FAST CGI
-        #### CHANGE with nginx listen or maybe socker with unix://path/to/sock.sock
+        #### CHANGE with php fpm listen host:port or maybe socket with unix://path/to/socket.sock
         ####
         fastcgi_pass 127.0.0.1:9000;
 

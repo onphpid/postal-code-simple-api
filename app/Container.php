@@ -29,7 +29,7 @@ return new Container([
         // if does not have request time
         if (!isset($serverParams['REQUEST_TIME_FLOAT'])) {
             $serverParams['REQUEST_TIME_FLOAT'] = microtime(true);
-            $serverParams['REQUEST_TIME'] = abs($serverParams['REQUEST_TIME_FLOAT']);
+            $serverParams['REQUEST_TIME'] = intval($serverParams['REQUEST_TIME_FLOAT']);
         }
 
         return Environment::mock($serverParams);

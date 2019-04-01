@@ -134,7 +134,7 @@ $this->get(
         $province = isset($params['province'])
             ? trim($params['province'])
             : '';
-        $isProvinceNumeric = is_numeric($province) && strlen($province) === 3;
+        $isProvinceNumeric = is_numeric($province) && strlen($province) === 2;
         /**
          * @var Database[] $this
          * @var Response $response
@@ -252,7 +252,7 @@ $this->get(
         $province = isset($params['province'])
             ? trim($params['province'])
             : '';
-        $isProvinceNumeric = is_numeric($province) && strlen($province) === 3;
+        $isProvinceNumeric = is_numeric($province) && strlen($province) === 2;
         /**
          * @var Database[] $this
          * @var Response $response

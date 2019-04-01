@@ -15,6 +15,13 @@ use Slim\Http\Response;
 $this->get(
     '/provinces[/]',
     function (ServerRequestInterface $request, ResponseInterface $response) {
+        $jsonOptions = $request->getQueryParams();
+        $jsonOptions = isset($jsonOptions['compress'])
+            && is_string($jsonOptions['compress'])
+            && in_array(strtolower($jsonOptions['compress']), ['true', 'yes', '1'])
+            ? JSON_UNESCAPED_SLASHES|~JSON_PRETTY_PRINT
+            : JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT;
+
         /**
          * @var Database[] $this
          * @var Response $response
@@ -36,7 +43,7 @@ $this->get(
             ];
         }
         $stmt->closeCursor();
-        return $response->withJson(['data' => $data], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        return $response->withJson(['data' => $data], 200, $jsonOptions);
     });
 
 // SHOW BY POSTAL CODE
@@ -44,6 +51,12 @@ $this->get(
 $this->get(
     '/postal/{code: [0-9]+}[/]',
     function (ServerRequestInterface $request, ResponseInterface $response, array $params) {
+        $jsonOptions = $request->getQueryParams();
+        $jsonOptions = isset($jsonOptions['compress'])
+                       && is_string($jsonOptions['compress'])
+                       && in_array(strtolower($jsonOptions['compress']), ['true', 'yes', '1'])
+            ? JSON_UNESCAPED_SLASHES|~JSON_PRETTY_PRINT
+            : JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT;
         /**
          * @var Database[] $this
          * @var Response $response
@@ -113,7 +126,7 @@ $this->get(
             );
         }
 
-        return $response->withJson(['data' => $data], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        return $response->withJson(['data' => $data], 200, $jsonOptions);
     });
 
 // SHOW BY SUB URBAN & UP
@@ -124,6 +137,12 @@ $this->get(
 $this->get(
     '/urban/{urban: [^\/]+}[/[{sub_district: [^\/]+}[/[{city: [^\/]+}[/[{province: [^\/]+}[/]]]]]]]',
     function (ServerRequestInterface $request, ResponseInterface $response, array $params) {
+        $jsonOptions = $request->getQueryParams();
+        $jsonOptions = isset($jsonOptions['compress'])
+                       && is_string($jsonOptions['compress'])
+                       && in_array(strtolower($jsonOptions['compress']), ['true', 'yes', '1'])
+            ? JSON_UNESCAPED_SLASHES|~JSON_PRETTY_PRINT
+            : JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT;
         $urban = trim($params['urban']);
         $sub_district = isset($params['sub_district'])
             ? trim($params['sub_district'])
@@ -233,7 +252,7 @@ $this->get(
             );
         }
 
-        return $response->withJson(['data' => array_values($data)], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        return $response->withJson(['data' => array_values($data)], 200, $jsonOptions);
     });
 
 // SHOW BY SUB DISTRICT & SUB
@@ -243,6 +262,12 @@ $this->get(
 $this->get(
     '/sub_district/{sub_district: [^\/]+}[/[{city: [^\/]+}[/[{province: [^\/]+}[/]]]]]',
     function (ServerRequestInterface $request, ResponseInterface $response, array $params) {
+        $jsonOptions = $request->getQueryParams();
+        $jsonOptions = isset($jsonOptions['compress'])
+                       && is_string($jsonOptions['compress'])
+                       && in_array(strtolower($jsonOptions['compress']), ['true', 'yes', '1'])
+            ? JSON_UNESCAPED_SLASHES|~JSON_PRETTY_PRINT
+            : JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT;
         $sub_district = isset($params['sub_district'])
             ? trim($params['sub_district'])
             : '';
@@ -347,7 +372,7 @@ $this->get(
             );
         }
 
-        return $response->withJson(['data' => array_values($data)], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        return $response->withJson(['data' => array_values($data)], 200, $jsonOptions);
     });
 
 // SHOW BY CITY & SUB
@@ -357,6 +382,12 @@ $this->get(
 $this->get(
     '/city/{city: [^\/]+}[/[{sub_district: [^\/]+}[/[{urban: [^\/]+}[/]]]]]',
     function (ServerRequestInterface $request, ResponseInterface $response, array $params) {
+        $jsonOptions = $request->getQueryParams();
+        $jsonOptions = isset($jsonOptions['compress'])
+                       && is_string($jsonOptions['compress'])
+                       && in_array(strtolower($jsonOptions['compress']), ['true', 'yes', '1'])
+            ? JSON_UNESCAPED_SLASHES|~JSON_PRETTY_PRINT
+            : JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT;
         $city = isset($params['city'])
             ? trim($params['city'])
             : '';
@@ -454,7 +485,7 @@ $this->get(
             );
         }
 
-        return $response->withJson(['data' => array_values($data)], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        return $response->withJson(['data' => array_values($data)], 200, $jsonOptions);
     });
 
 // SHOW BY PROVINCE & SUB
@@ -465,6 +496,12 @@ $this->get(
 $this->get(
     '/province/{province: [^\/]+}[/[{city: [^\/]+}[/[{sub_district: [^\/]+}[/[{urban: [^\/]+}[/]]]]]]]',
     function (ServerRequestInterface $request, ResponseInterface $response, array $params) {
+        $jsonOptions = $request->getQueryParams();
+        $jsonOptions = isset($jsonOptions['compress'])
+                       && is_string($jsonOptions['compress'])
+                       && in_array(strtolower($jsonOptions['compress']), ['true', 'yes', '1'])
+            ? JSON_UNESCAPED_SLASHES|~JSON_PRETTY_PRINT
+            : JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT;
         $province = isset($params['province'])
             ? trim($params['province'])
             : '';
@@ -575,7 +612,7 @@ $this->get(
             );
         }
 
-        return $response->withJson(['data' => array_values($data)], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        return $response->withJson(['data' => array_values($data)], 200, $jsonOptions);
     });
 
 // SHOW ENDPOINT
@@ -583,6 +620,12 @@ $this->get(
 $this->get(
     '[/]',
     function (ServerRequestInterface $request, ResponseInterface $response) {
+        $jsonOptions = $request->getQueryParams();
+        $jsonOptions = isset($jsonOptions['compress'])
+                       && is_string($jsonOptions['compress'])
+                       && in_array(strtolower($jsonOptions['compress']), ['true', 'yes', '1'])
+            ? JSON_UNESCAPED_SLASHES|~JSON_PRETTY_PRINT
+            : JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT;
         /**
          * @var Response $response
          */
@@ -597,5 +640,5 @@ $this->get(
                     '/province' => 'Get list by province',
                 ]
             ]
-        ], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        ], 200, $jsonOptions);
     });

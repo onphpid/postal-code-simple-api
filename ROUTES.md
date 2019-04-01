@@ -42,6 +42,9 @@ And any common http code
 
 ## ROUTES LIST
 
+add query param `compress=` to `true|1|yes` to receive result non prettify json
+
+
 ### Path: /
 
 Main path is info endpoint lists

@@ -9,7 +9,7 @@ This contains database postal code & area.
 ## REQUIREMENT
 
 - php 7.0 or later
-- php sqlite extension
+- php pdo & sqlite extension
 - php json extension
 - Web server nginx or apache with mod_rewrite enabled
 

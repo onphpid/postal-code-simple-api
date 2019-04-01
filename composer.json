@@ -4,6 +4,7 @@
     "require": {
         "php": "^7.0",
         "ext-json": "*",
+        "ext-pdo": "*",
         "slim/slim": "^3.12",
         "pentagonal/database-dbal": "^1"
     },

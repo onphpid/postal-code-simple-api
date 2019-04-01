@@ -120,7 +120,7 @@ $this->get(
 // http://example.com/urban/{urban}
 // http://example.com/urban/{urban}/{sub_district}
 // http://example.com/urban/{urban}/{sub_district}/{city}
-// http://example.com/urban/{urban}/{sub_district}/{city}/{province}
+// http://example.com/urban/{urban}/{sub_district}/{city}/{province:code|name}
 $this->get(
     '/urban/{urban: [^\/]+}[/[{sub_district: [^\/]+}[/[{city: [^\/]+}[/[{province: [^\/]+}[/]]]]]]]',
     function (ServerRequestInterface $request, ResponseInterface $response, array $params) {
@@ -134,6 +134,7 @@ $this->get(
         $province = isset($params['province'])
             ? trim($params['province'])
             : '';
+        $isProvinceNumeric = is_numeric($province) && strlen($province) === 3;
         /**
          * @var Database[] $this
          * @var Response $response
@@ -181,7 +182,11 @@ $this->get(
         }
         if ($province !== '') {
             $stmt = $stmt
-                ->andWhere('LOWER(db_province_data.province_name) = LOWER(:province)')
+                ->andWhere(
+                    $isProvinceNumeric
+                        ? 'db_province_data.province_code = :province'
+                        : 'LOWER(db_province_data.province_name) = LOWER(:province)'
+                )
                 ->setParameter(':province', $province);
         }
 
@@ -234,8 +239,9 @@ $this->get(
 // SHOW BY SUB DISTRICT & SUB
 // http://example.com/sub_district/{sub_district}
 // http://example.com/sub_district/{sub_district}/{city}
+// http://example.com/sub_district/{sub_district}/{city}/{province:code|name}
 $this->get(
-    '/sub_district/{sub_district: [^\/]+}[/[{city: [^\/]+}[/]]]',
+    '/sub_district/{sub_district: [^\/]+}[/[{city: [^\/]+}[/[{province: [^\/]+}[/]]]]]',
     function (ServerRequestInterface $request, ResponseInterface $response, array $params) {
         $sub_district = isset($params['sub_district'])
             ? trim($params['sub_district'])
@@ -243,6 +249,10 @@ $this->get(
         $city = isset($params['city'])
             ? trim($params['city'])
             : '';
+        $province = isset($params['province'])
+            ? trim($params['province'])
+            : '';
+        $isProvinceNumeric = is_numeric($province) && strlen($province) === 3;
         /**
          * @var Database[] $this
          * @var Response $response
@@ -281,6 +291,16 @@ $this->get(
             $stmt = $stmt
                 ->andWhere('LOWER(db_postal_code_data.city) = LOWER(:city)')
                 ->setParameter(':city', $city);
+        }
+
+        if ($province !== '') {
+            $stmt = $stmt
+                ->andWhere(
+                    $isProvinceNumeric
+                        ? 'db_province_data.province_code = :province'
+                        : 'LOWER(db_province_data.province_name) = LOWER(:province)'
+                )
+                ->setParameter(':province', $province);
         }
 
         $stmt = $stmt->execute();
@@ -438,7 +458,7 @@ $this->get(
     });
 
 // SHOW BY PROVINCE & SUB
-// http://example.com/province/{province}
+// http://example.com/province/{province:code|name}
 // http://example.com/province/{province}/{city}
 // http://example.com/province/{province}/{city}/{sub_district}
 // http://example.com/province/{province}/{city}/{sub_district}/{urban}
@@ -448,6 +468,7 @@ $this->get(
         $province = isset($params['province'])
             ? trim($params['province'])
             : '';
+        $isProvinceNumeric = is_numeric($province) && strlen($province) === 2;
         $city = isset($params['city'])
             ? trim($params['city'])
             : '';
@@ -489,7 +510,10 @@ $this->get(
                 '',
                 'db_province_data.province_code = db_postal_code_data.province_code'
             )
-            ->where('LOWER(db_province_data.province_name) = LOWER(:province)')
+            ->where($isProvinceNumeric
+                ? 'LOWER(db_province_data.province_code) = LOWER(:province)'
+                : 'LOWER(db_province_data.province_name) = LOWER(:province)'
+            )
             ->setParameter(':province', $province);
 
         if ($city !== '') {

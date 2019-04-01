@@ -150,7 +150,7 @@ Path is info of lists provinces
 `/urban/(string:urbanName)`
 `/urban/(string:urbanName)/(string:subDistrictName)`
 `/urban/(string:urbanName)/(string:subDistrictName)/(string:cityName)`
-`/urban/(string:urbanName)/(string:subDistrictName)/(string:cityName)/(string:provinceName)`
+`/urban/(string:urbanName)/(string:subDistrictName)/(string:cityName)/(string:provinceName|code)`
 
 > example response:
 
@@ -192,6 +192,7 @@ Path is info of lists provinces & area by sub district & sub value
 
 `/sub_district/(string:subDistrictName)`
 `/sub_district/(string:subDistrictName)/(string:cityName)`
+`/sub_district/(string:subDistrictName)/(string:cityName)/(string:provinceName|code)`
 
 > example response:
 
@@ -284,14 +285,14 @@ Data is as array list mapping
 
 ### Path: /province
 
-Path is info of lists provinces & area by city & sub value
+Path is info of lists provinces & area by province name / code & sub value
 
 > endpoint: 
 
-`/province/(string:provinceName)`
-`/province/(string:provinceName)/(string:cityName)`
-`/province/(string:provinceName)/(string:cityName)/(string:subDistrictName)`
-`/province/(string:provinceName)/(string:cityName)/(string:subDistrictName)/(string:urbanName)`
+`/province/(string:provinceName|code)`
+`/province/(string:provinceName|code)/(string:cityName)`
+`/province/(string:provinceName|code)/(string:cityName)/(string:subDistrictName)`
+`/province/(string:provinceName|code)/(string:cityName)/(string:subDistrictName)/(string:urbanName)`
 
 > example response:
 

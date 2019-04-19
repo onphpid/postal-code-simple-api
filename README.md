@@ -57,7 +57,7 @@ Document root placed on `public` directory
 ## AUTHOR
 
 - nawa
-    - email: arrayiterator@gmail.com
+    - email: me@arrayiterator.com
     - website: https://www.pentagonal.org
     - github: [@ArrayIterator](https://github.com/arrayiterator/)
 
